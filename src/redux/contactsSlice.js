@@ -1,11 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid/non-secure';
 
-import initialContacts from 'data/contacts.json';
+const contactsInitialState = {
+  items: [],
+  isLoading: false,
+  error: null,
+};
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: initialContacts,
+  initialState: contactsInitialState,
+  //old reducers:
   reducers: {
     addNewContact(state, action) {
       const { name, number } = action.payload;
@@ -21,10 +26,29 @@ const contactsSlice = createSlice({
       const { id } = action.payload;
       return state.filter(contact => contact.id !== id);
     },
+    //new reducers:
+    fetchingInProgress(state) {
+      state.isLoading = true;
+    },
+    fetchingSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.items = action.payload;
+    },
+    fetchingError(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
 // console.log(contactsSlice);
 
-export const { addNewContact, deleteContact } = contactsSlice.actions;
+export const {
+  addNewContact,
+  deleteContact,
+  fetchingInProgress,
+  fetchingSuccess,
+  fetchingError,
+} = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;
