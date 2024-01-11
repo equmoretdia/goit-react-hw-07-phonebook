@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import { addNewContact } from '../../redux/contactsSlice';
+// import { addNewContact } from '../../redux/contactsSlice';
 import { getContacts } from '../../redux/selectors';
 
 import css from './ContactForm.module.css';
 
 const ContactForm = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const [state, setState] = useState({ name: '', number: '' });
   const { name, number } = state;
@@ -32,7 +33,7 @@ const ContactForm = () => {
         theme: 'colored',
       });
     } else {
-      dispatch(addNewContact(state));
+      // dispatch(addNewContact(state));
       formReset();
     }
   };
