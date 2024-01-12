@@ -10,6 +10,7 @@ import {
 } from '../../redux/selectors';
 import { fetchContacts } from '../../redux/operations';
 import ContactItem from '../ContactItem';
+import Loader from '../Loader';
 
 import css from './ContactList.module.css';
 
@@ -35,7 +36,7 @@ const ContactList = () => {
 
   return (
     <>
-      {isLoading && !error && <p>Loading contacts...</p>}
+      {isLoading && !error && <Loader />}
       {error && <p>Error...</p>}
       <ul className={css.wrapper}>
         {filteredContacts.map(contact => (
