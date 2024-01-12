@@ -10,8 +10,8 @@ import css from './ContactForm.module.css';
 const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  const [state, setState] = useState({ name: '', number: '' });
-  const { name, number } = state;
+  const [state, setState] = useState({ name: '', phone: '' });
+  const { name, phone } = state;
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -26,10 +26,8 @@ const ContactForm = () => {
         position: 'top-right',
         theme: 'colored',
       });
-    } else if (
-      contacts.items.some(contact => contact.number === number.trim())
-    ) {
-      toast.warn(`${number} is already in your contacts`, {
+    } else if (contacts.items.some(contact => contact.phone === phone.trim())) {
+      toast.warn(`${phone} is already in your contacts`, {
         position: 'top-right',
         theme: 'colored',
       });
@@ -40,7 +38,7 @@ const ContactForm = () => {
   };
 
   const formReset = () => {
-    setState({ name: '', number: '' });
+    setState({ name: '', phone: '' });
   };
 
   const handleChange = e => {
@@ -68,11 +66,11 @@ const ContactForm = () => {
         <input
           className={css.input}
           type="tel"
-          name="number"
+          name="phone"
           pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={number}
+          value={phone}
           onChange={handleChange}
         />
       </label>
