@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getContacts, getFilterValue } from '../../redux/selectors';
+import {
+  selectItems,
+  selectIsLoading,
+  selectError,
+  selectFilterValue,
+} from '../../redux/selectors';
 import { fetchContacts } from '../../redux/operations';
 import ContactItem from '../ContactItem';
 
@@ -9,8 +14,10 @@ import css from './ContactList.module.css';
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const { items, isLoading, error } = useSelector(getContacts);
-  const filter = useSelector(getFilterValue);
+  const items = useSelector(selectItems);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+  const filter = useSelector(selectFilterValue);
 
   useEffect(() => {
     dispatch(fetchContacts());
