@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+// import { nanoid } from 'nanoid/non-secure';
 
 // import {
 //   fetchingInProgress,
@@ -30,3 +31,27 @@ export const fetchContacts = createAsyncThunk(
 //     dispatch(fetchingError(error.message));
 //   }
 // };
+
+export const addContact = createAsyncThunk(
+  'contacts/addContact',
+  async ({ name, phone }, thunkAPI) => {
+    try {
+      const response = await axios.post('/contacts', { name, phone });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContact',
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.delete(`/contacts/${id}`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

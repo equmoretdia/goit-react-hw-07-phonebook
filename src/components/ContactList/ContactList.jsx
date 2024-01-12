@@ -26,7 +26,7 @@ const ContactList = () => {
 
   return (
     <>
-      {isLoading && <p>Loading contacts...</p>}
+      {isLoading && !error && <p>Loading contacts...</p>}
       {error && <p>Error...</p>}
       <ul className={css.wrapper}>
         {filteredContacts.map(contact => (

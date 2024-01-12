@@ -1,15 +1,14 @@
 import { useState } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
-// import { addNewContact } from '../../redux/contactsSlice';
+import { addContact } from '../../redux/operations';
 import { getContacts } from '../../redux/selectors';
 
 import css from './ContactForm.module.css';
 
 const ContactForm = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const [state, setState] = useState({ name: '', number: '' });
   const { name, number } = state;
@@ -19,7 +18,7 @@ const ContactForm = () => {
     // console.log(`name:${name}, number:${number}`);
     // console.log(contacts);
     if (
-      contacts.some(
+      contacts.items.some(
         contact => contact.name.toLowerCase() === name.toLowerCase().trim()
       )
     ) {
@@ -27,13 +26,15 @@ const ContactForm = () => {
         position: 'top-right',
         theme: 'colored',
       });
-    } else if (contacts.some(contact => contact.number === number.trim())) {
+    } else if (
+      contacts.items.some(contact => contact.number === number.trim())
+    ) {
       toast.warn(`${number} is already in your contacts`, {
         position: 'top-right',
         theme: 'colored',
       });
     } else {
-      // dispatch(addNewContact(state));
+      dispatch(addContact(state));
       formReset();
     }
   };
