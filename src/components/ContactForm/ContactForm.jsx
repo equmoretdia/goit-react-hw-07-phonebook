@@ -33,6 +33,10 @@ const ContactForm = () => {
       });
     } else {
       dispatch(addContact(state));
+      toast.success(`New contact "${name}" has been added successfully`, {
+        position: 'top-right',
+        theme: 'colored',
+      });
       formReset();
     }
   };
