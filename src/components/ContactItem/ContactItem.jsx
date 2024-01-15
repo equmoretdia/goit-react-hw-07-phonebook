@@ -10,12 +10,16 @@ import css from './ContactItem.module.css';
 const ContactItem = ({ id, name, number }) => {
   const dispatch = useDispatch();
 
-  const handleDeletion = () => {
-    dispatch(deleteContact(id));
-    toast.success(`Contact "${name}" has been deleted successfully`, {
-      position: 'top-right',
-      theme: 'colored',
-    });
+  const handleContactDeletion = async () => {
+    try {
+      await dispatch(deleteContact(id));
+      toast.success(`Contact "${name}" has been deleted successfully`, {
+        position: 'top-right',
+        theme: 'colored',
+      });
+    } catch (rejectedValueOrSerializedError) {
+      console.log(rejectedValueOrSerializedError);
+    }
   };
 
   return (
@@ -23,7 +27,11 @@ const ContactItem = ({ id, name, number }) => {
       <p>
         {name}: {number}
       </p>
-      <button className={css.button} type="button" onClick={handleDeletion}>
+      <button
+        className={css.button}
+        type="button"
+        onClick={handleContactDeletion}
+      >
         Delete
       </button>
     </li>

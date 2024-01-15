@@ -32,12 +32,7 @@ const ContactForm = () => {
         theme: 'colored',
       });
     } else {
-      dispatch(addContact(state));
-      toast.success(`New contact "${name}" has been added successfully`, {
-        position: 'top-right',
-        theme: 'colored',
-      });
-      formReset();
+      handleContactAddition();
     }
   };
 
@@ -48,6 +43,19 @@ const ContactForm = () => {
   const handleChange = e => {
     const { name, value } = e.currentTarget;
     setState(prevState => ({ ...prevState, [name]: value }));
+  };
+
+  const handleContactAddition = async () => {
+    try {
+      await dispatch(addContact(state));
+      toast.success(`New contact "${name}" has been added successfully`, {
+        position: 'top-right',
+        theme: 'colored',
+      });
+      formReset();
+    } catch (rejectedValueOrSerializedError) {
+      console.log(rejectedValueOrSerializedError);
+    }
   };
 
   return (
