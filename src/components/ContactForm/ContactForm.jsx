@@ -3,13 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { addContact } from '../../redux/operations';
-import { selectItems } from '../../redux/selectors';
+import { selectItems, selectAddContactIsLoading } from '../../redux/selectors';
+import LoaderInButton from '../LoaderInButton';
 
 import css from './ContactForm.module.css';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
+  const isLoading = useSelector(selectAddContactIsLoading);
   const [state, setState] = useState({ name: '', phone: '' });
   const { name, phone } = state;
 
@@ -87,7 +89,7 @@ const ContactForm = () => {
         />
       </label>
       <button className={css.button} type="submit">
-        Add contact
+        {isLoading ? <LoaderInButton /> : 'Add contact'}
       </button>
     </form>
   );
