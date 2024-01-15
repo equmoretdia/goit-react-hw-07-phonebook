@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
-  selectIsLoading,
+  selectFetchContactsIsLoading,
   selectError,
   selectFilteredContacts,
 } from '../../redux/selectors';
@@ -14,7 +14,7 @@ import css from './ContactList.module.css';
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
+  const isLoading = useSelector(selectFetchContactsIsLoading);
   const error = useSelector(selectError);
   const filteredContacts = useSelector(selectFilteredContacts);
 
