@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { deleteContact } from '../../redux/operations';
+import { selectDeletedContactId } from '../../redux/selectors';
+import LoaderInButton from '../LoaderInButton';
 
 import css from './ContactItem.module.css';
 
 const ContactItem = ({ id, name, number }) => {
   const dispatch = useDispatch();
+  const deletedContactId = useSelector(selectDeletedContactId);
 
   const handleContactDeletion = async () => {
     try {
@@ -32,7 +35,7 @@ const ContactItem = ({ id, name, number }) => {
         type="button"
         onClick={handleContactDeletion}
       >
-        Delete
+        {deletedContactId === id ? <LoaderInButton /> : 'Delete'}
       </button>
     </li>
   );

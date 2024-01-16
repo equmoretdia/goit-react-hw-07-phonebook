@@ -4,7 +4,11 @@ import { fetchContacts, addContact, deleteContact } from './operations';
 
 const contactsInitialState = {
   items: [],
-  isLoading: { fetchContacts: false, addContact: false, deleteContact: false },
+  isLoading: {
+    fetchContacts: false,
+    addContact: false,
+    deletedContactId: null,
+  },
   error: null,
 };
 
@@ -46,18 +50,18 @@ const contactsSlice = createSlice({
         state.isLoading.addContact = false;
         state.error = action.payload;
       })
-      .addCase(deleteContact.pending, state => {
-        state.isLoading.deleteContact = true;
+      .addCase(deleteContact.pending, (state, action) => {
+        state.isLoading.deletedContactId = action.meta.arg;
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
-        state.isLoading.deleteContact = false;
+        state.isLoading.deletedContactId = null;
         state.error = null;
         state.items = state.items.filter(
           contact => contact.id !== action.payload.id
         );
       })
       .addCase(deleteContact.rejected, (state, action) => {
-        state.isLoading.deleteContact = false;
+        state.isLoading.deletedContactId = null;
         state.error = action.payload;
       });
   },
